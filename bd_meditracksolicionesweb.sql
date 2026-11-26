@@ -1,4 +1,5 @@
-use meditracksolucionesweb
+
+use meditracksolucionesweb;
 
 
 create table usuario (
@@ -12,14 +13,14 @@ password_hash varchar(250) not null,
 rol varchar(20) not null,
 estado varchar(20) not null default 'Activo',
 fecha_registro timestamp default current_timestamp
-)
+);
 
 create table especialidad (
 id_especialidad bigint auto_increment primary key,
 nombre varchar(100) not null unique,
 descripcion varchar(250),
 estado varchar(20) not null default 'Activo'
-)
+);
 create table paciente (
 id_paciente bigint auto_increment primary key,
 id_usuario bigint not null unique,
@@ -28,7 +29,7 @@ genero varchar(20),
 direccion varchar(200),
 constraint fk_paciente_usuario foreign key(id_usuario)
 references usuario(id_usuario)
-)
+);
 create table medico(
 id_medico bigint auto_increment primary key,
 id_usuario bigint not null unique,
@@ -38,7 +39,7 @@ cmp varchar(20) not null unique,
  references usuario(id_usuario),
  constraint fk_medico_especialidad  foreign key(id_especialidad)
  references especialidad(id_especialidad)
-)
+);
 
 create table horario_medico(
 id_horario bigint auto_increment primary key,
@@ -51,7 +52,7 @@ constraint fk_horario_medico_medico foreign key(id_medico)
 references medico(id_medico),
 CONSTRAINT chk_horario_horas
         CHECK (hora_fin > hora_inicio)
-)
+);
 
 create table citas(
 id_cita bigint auto_increment primary key,
@@ -69,7 +70,7 @@ references medico(id_medico),
 constraint uq_medico_fecha unique ( id_medico,fecha_hora),
 constraint uq_paciente_fecha unique(id_paciente, fecha_hora)
 
-)
+);
 
 create table familiar(
 id_familia bigint auto_increment primary key,
@@ -79,7 +80,7 @@ fecha_registro timestamp default current_timestamp,
 constraint fk_familiar_usuario foreign key(id_usuario)
 references usuario(id_usuario)
 
-)
+);
 
 create table paciente_familiar (
 id_paciente bigint not null,
@@ -92,7 +93,7 @@ CONSTRAINT fk_pf_paciente FOREIGN KEY (id_paciente)
 	REFERENCES paciente(id_paciente),
 CONSTRAINT fk_pf_familiar FOREIGN KEY (id_familia)
 	REFERENCES familiar(id_familia)
-)
+);
 
 CREATE TABLE notificacion (
     id_notificacion BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -106,7 +107,7 @@ CREATE TABLE notificacion (
 
     CONSTRAINT fk_notificacion_usuario FOREIGN KEY (id_usuario)
         REFERENCES usuario(id_usuario)
-)
+);
 
 CREATE TABLE historia_clinica (
     id_historia BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -122,7 +123,7 @@ CREATE TABLE historia_clinica (
     CONSTRAINT fk_historia_paciente
         FOREIGN KEY (id_paciente)
         REFERENCES paciente(id_paciente)
-)
+);
 
 CREATE TABLE medicamento (
     id_medicamento BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -131,7 +132,7 @@ CREATE TABLE medicamento (
     presentacion VARCHAR(100),
     estado VARCHAR(20) NOT NULL DEFAULT 'Activo',
     fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 
 CREATE TABLE tratamiento (
@@ -154,7 +155,7 @@ CREATE TABLE tratamiento (
 
     CONSTRAINT chk_tratamiento_fechas
         CHECK (fecha_fin IS NULL OR fecha_fin >= fecha_inicio)
-)
+);
 
 CREATE TABLE detalle_tratamiento (
     id_detalle BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -175,7 +176,7 @@ CREATE TABLE detalle_tratamiento (
 
     CONSTRAINT chk_duracion_dias
         CHECK (duracion_dias IS NULL OR duracion_dias > 0)
-)
+);
 
 CREATE TABLE auditoria (
     id_auditoria BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -188,7 +189,7 @@ CREATE TABLE auditoria (
     CONSTRAINT fk_auditoria_usuario
         FOREIGN KEY (id_usuario)
         REFERENCES usuario(id_usuario)
-)
+);
 
 
 CREATE TABLE consulta_medica (
@@ -201,7 +202,7 @@ CREATE TABLE consulta_medica (
     CONSTRAINT fk_consulta_cita
         FOREIGN KEY (id_cita)
         REFERENCES citas(id_cita)
-)
+);
 
 USE meditracksolucionesweb;
 
@@ -217,7 +218,7 @@ CREATE TABLE enfermera (
     CONSTRAINT fk_enfermera_usuario
         FOREIGN KEY (id_usuario)
         REFERENCES usuario(id_usuario)
-)
+);
 
 
 
@@ -232,4 +233,4 @@ CREATE TABLE codigo_vinculacion (
     CONSTRAINT fk_codigo_paciente
         FOREIGN KEY (id_paciente)
         REFERENCES paciente(id_paciente)
-)
+);
