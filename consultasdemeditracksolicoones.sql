@@ -234,7 +234,7 @@ WHERE dni = '12345678'
 FROM usuario
 WHERE dni ;
 
-select*from medico
+select*from medico;
 SELECT * FROM usuario;
 
 USE meditracksolucionesweb;
